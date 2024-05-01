@@ -16,11 +16,11 @@ class Muscles extends Model
 
     public function primaryInExercises()
     {
-        return $this->hasMany(Exercises::class,'primary_muscle_id');
+        return $this->hasMany(Exercises::class, 'primary_muscle_id');
     }
 
     public function secondaryInExercises()
     {
-        return $this->belongsToMany(Exercises::class,'muscle_exercise');
+        return $this->belongsToMany(Exercises::class, 'muscle_exercise');
     }
 }

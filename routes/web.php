@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\MusclesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -24,4 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+Route::middleware('auth')->group(function () {
+    Route::get('/muscles', [MusclesController::class, 'index'])->name('muscles.index');
+    Route::get('/muscles/new', [MusclesController::class, 'create'])->name('muscles.create');
+    Route::post('/muscles/new', [MusclesController::class, 'store'])->name('muscles.store');
+});
+
+require __DIR__ . '/auth.php';
