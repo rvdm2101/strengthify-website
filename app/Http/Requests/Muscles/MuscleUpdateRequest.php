@@ -4,7 +4,7 @@ namespace App\Http\Requests\Muscles;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MuscleCreateRequest extends FormRequest
+class MuscleUpdateRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.

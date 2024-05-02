@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Muscles\MuscleCreateRequest;
+use App\Http\Requests\Muscles\MuscleUpdateRequest;
 use App\Models\Muscles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -40,7 +42,7 @@ class MusclesController extends Controller
             $image = $request->file('image');
             $filename = time() . '.' . $image->getClientOriginalExtension();
             $request->image->storeAs('images', $filename);
-            $muscle->image = $filename;
+            $muscle->image = 'images/' . $filename;
         }
 
         $muscle->save();
@@ -60,15 +62,33 @@ class MusclesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $muscle = Muscles::find($id);
+        return Inertia::render('Muscles/Edit', [
+            'muscle' => $muscle,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(MuscleUpdateRequest $request, string $id)
     {
-        //
+        $muscle = Muscles::find($id);
+        $muscle->fill($request->validated());
+        // var_dump($request->input());
+        // var_dump($id);
+        // die();
+
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $filename = time() . '.' . $image->getClientOriginalExtension();
+            $request->image->storeAs('images', $filename);
+            Storage::delete($muscle->image);
+            $muscle->image = '/images/' . $filename;
+        }
+
+        $muscle->save();
+        return redirect()->route('muscles.index');
     }
 
     /**

@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/muscles', [MusclesController::class, 'index'])->name('muscles.index');
     Route::get('/muscles/new', [MusclesController::class, 'create'])->name('muscles.create');
     Route::post('/muscles/new', [MusclesController::class, 'store'])->name('muscles.store');
+    Route::get('/muscles/{id}', [MusclesController::class, 'edit'])->name('muscles.edit');
+    Route::patch('/muscles/{id}', [MusclesController::class, 'update'])->name('muscles.update');
 });
 
 require __DIR__ . '/auth.php';

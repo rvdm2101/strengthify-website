@@ -3,7 +3,6 @@ import { Head, Link } from '@inertiajs/react';
 import { Muscle, PageProps } from '@/types';
 
 export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }>) {
-    console.log({ muscles });
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -18,12 +17,19 @@ export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }
                             <h2 className="text-lg font-medium text-gray-900">Muscles overview and stuff</h2>
                             <Link className="ml-auto" href={route('muscles.create')}>Create new Muscle</Link>
                         </section>
-                        <section className="p-6 flex">
+                        <section className="p-6 flex flex-row gap-4">
                             {muscles.map(muscle => (
-                                <div key={muscle.id}>
-                                    <h3>{muscle.name}</h3>
-                                    <img src={`/images/${muscle.image}`} />
-                                </div>
+                                <Link
+                                    key={muscle.id}
+                                    className="relative basis-1/4 shadow-lg rounded-2xl border border-gray-500 overflow-hidden"
+                                    href={route('muscles.edit', { id: muscle.id })}
+                                >
+                                    <img className="h-64 p-6 mx-auto" src={muscle.image} />
+                                    <div className="absolute w-full p-6 bottom-0">
+                                        <h3>{muscle.name}</h3>
+                                    </div>
+                                    <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-gray-900 opacity-40" />
+                                </Link>
                             ))}
                         </section>
                     </div>
