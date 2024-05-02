@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ImagesController;
 use App\Http\Controllers\MusclesController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
@@ -32,5 +33,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/muscles/{id}', [MusclesController::class, 'edit'])->name('muscles.edit');
     Route::patch('/muscles/{id}', [MusclesController::class, 'update'])->name('muscles.update');
 });
+
+Route::get('/uploaded-images', [ImagesController::class, 'index'])->name('images.index');
+Route::get('/uploaded-images/new', [ImagesController::class, 'create'])->name('images.create');
+Route::post('/uploaded-images/new', [ImagesController::class, 'store'])->name('images.store');
+Route::delete('/uploaded-images/{id}', [ImagesController::class, 'destroy'])->name('images.delete');
 
 require __DIR__ . '/auth.php';

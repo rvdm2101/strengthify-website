@@ -1,7 +1,7 @@
 import { forwardRef, useEffect, useImperativeHandle, useRef, InputHTMLAttributes } from 'react';
 
 export default forwardRef(function FileInput(
-    { type = 'file', className = '', isFocused = false, image = undefined, ...props }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean, image?: File | string },
+    { type = 'file', className = '', isFocused = false, image = undefined, ...props }: InputHTMLAttributes<HTMLInputElement> & { isFocused?: boolean, image?: File },
     ref
 ) {
     const localRef = useRef<HTMLInputElement>(null);
@@ -19,8 +19,8 @@ export default forwardRef(function FileInput(
     return (
         <>
             {image ? <div className="w-32 h-32 bg-center bg-no-repeat bg-contain shadow-xl rounded-xl mb-2" style={{
-                backgroundImage: `url(${typeof image === 'string' ? image : URL.createObjectURL(image)})`
-            }} /> : null}
+                backgroundImage: `url(${URL.createObjectURL(image)})`
+                }} /> : null}
             <input
                 {...props}
                 type={type}

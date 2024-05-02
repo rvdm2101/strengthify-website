@@ -7,16 +7,27 @@ export interface User {
     email_verified_at: string;
 }
 
+export interface Image {
+    id: number;
+    filename: string;
+    path: string;
+    alt?: string;
+}
+
 export interface Muscle {
     id: number;
     name: string;
-    image?: string;
+    image?: Image;
 }
 
 export interface MuscleForm {
-    id?: number;
     name: string;
+    imageId?: number;
+}
+
+export interface ImageForm {
     image?: File;
+    alt?: string;
 }
 
 export type PageProps<T extends Record<string, unknown> = Record<string, unknown>> = T & {

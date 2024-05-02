@@ -32,6 +32,12 @@ export default function Authenticated({ user, header, children }: PropsWithChild
                                     Muscles
                                 </NavLink>
                             </div>
+
+                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                                <NavLink href={route('images.index')} active={route().current('images.index')}>
+                                    Uploaded images
+                                </NavLink>
+                            </div>
                         </div>
 
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
