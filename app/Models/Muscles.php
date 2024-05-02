@@ -11,7 +11,7 @@ class Muscles extends Model
     protected $table = 'muscles';
     protected $fillable = [
         'name',
-        'image'
+        'image_id'
     ];
 
     public function primaryInExercises()
@@ -22,5 +22,10 @@ class Muscles extends Model
     public function secondaryInExercises()
     {
         return $this->belongsToMany(Exercises::class, 'muscle_exercise');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Images::class, 'image_id');
     }
 }

@@ -11,17 +11,21 @@ class Exercises extends Model
     protected $table = 'exercises';
     protected $fillable = [
         'name',
-        'primary_muscle_id',
-        'images'
+        'primary_muscle_id'
     ];
 
     public function primaryMuscle()
     {
-        return $this->belongsTo(Muscles::class,'primary_muscle_id');
+        return $this->belongsTo(Muscles::class, 'primary_muscle_id');
     }
 
     public function secondaryMuscles()
     {
-        return $this->belongsToMany(Muscles::class,'muscle_exercise');
+        return $this->belongsToMany(Muscles::class, 'muscle_exercise');
+    }
+
+    public function images()
+    {
+        return $this->belongsToMany(Images::class, 'exercise_images');
     }
 }
