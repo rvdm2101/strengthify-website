@@ -42,7 +42,7 @@ class ImagesController extends Controller
 
             $image = new Images();
             $image->filename = $filename;
-            $image->path = $filePath;
+            $image->path = str_starts_with($filePath, '/') ? $filePath : '/' . $filePath;
             $image->alt = $request->input('alt', $filename);
             $image->save();
         }
