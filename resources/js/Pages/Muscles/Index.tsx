@@ -3,6 +3,7 @@ import { Head, Link } from '@inertiajs/react';
 import { Muscle, PageProps } from '@/types';
 
 export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }>) {
+    console.log({ muscles });
     return (
         <AuthenticatedLayout
             user={auth.user}
@@ -24,7 +25,7 @@ export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }
                                     className="relative basis-1/4 shadow-lg rounded-2xl border border-gray-500 overflow-hidden"
                                     href={route('muscles.edit', { id: muscle.id })}
                                 >
-                                    <img className="h-64 p-6 mx-auto" src={muscle.image} />
+                                    <img className="h-64 p-6 mx-auto" src={muscle.image?.path} />
                                     <div className="absolute w-full p-6 bottom-0">
                                         <h3>{muscle.name}</h3>
                                     </div>

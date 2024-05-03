@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Muscles;
+namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class MuscleCreateRequest extends FormRequest
+class MuscleRequest extends FormRequest
 {
     /**
      * Get the validation rules that apply to the request.
@@ -15,7 +15,7 @@ class MuscleCreateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+            'image_id' => ['integer'],
         ];
     }
 }

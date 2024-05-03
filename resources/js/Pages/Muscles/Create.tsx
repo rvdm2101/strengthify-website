@@ -1,20 +1,18 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head, useForm } from '@inertiajs/react';
 import { FormEventHandler } from 'react';
-import { MuscleForm, PageProps } from '@/types';
-import UpdateMuscleForm from './Partials/UpdateMuscleForm';
+import { Head, useForm } from '@inertiajs/react';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Image, MuscleForm, PageProps } from '@/types';
+import MuscleInformationForm from './Partials/MuscleInformationForm';
 
-export default function Create({ auth }: PageProps) {
+export default function Create({ auth, images }: PageProps<{ images: Image[] }>) {
     const { data, setData, post, errors, processing, recentlySuccessful } = useForm<MuscleForm>({
         name: '',
-        image: undefined,
+        image_id: undefined,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        console.log({data});
-        // post(route('muscles.store'));
+        post(route('muscles.store'));
     };
 
     return (
@@ -28,13 +26,14 @@ export default function Create({ auth }: PageProps) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <section className="p-6">
-                            <UpdateMuscleForm
+                            <MuscleInformationForm
+                                submit={submit}
                                 data={data}
                                 setData={setData}
                                 errors={errors}
                                 processing={processing}
                                 recentlySuccessful={recentlySuccessful}
-                                onSubmit={submit}
+                                images={images}
                             />
                         </section>
                     </div>

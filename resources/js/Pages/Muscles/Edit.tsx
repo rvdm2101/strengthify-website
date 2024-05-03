@@ -1,20 +1,17 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { FormEventHandler } from 'react';
 import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler, useState } from 'react';
-import { Muscle, MuscleForm, PageProps } from '@/types';
-import UpdateMuscleForm from './Partials/UpdateMuscleForm';
+import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
+import { Image, Muscle, MuscleForm, PageProps } from '@/types';
+import MuscleInformationForm from './Partials/MuscleInformationForm';
 
-export default function Edit({ auth, muscle }: PageProps<{ muscle: Muscle }>) {
+export default function Edit({ auth, muscle, images }: PageProps<{ muscle: Muscle, images: Image[] }>) {
     const { data, setData, patch, errors, processing, recentlySuccessful } = useForm<MuscleForm>({
-        id: muscle.id,
         name: muscle.name,
-        image: undefined,
+        image_id: muscle.image?.id,
     });
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
-
-        console.log({data});
         patch(route('muscles.update', { id: muscle.id }));
     };
 
@@ -29,14 +26,14 @@ export default function Edit({ auth, muscle }: PageProps<{ muscle: Muscle }>) {
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                         <section className="p-6">
-                            <UpdateMuscleForm
-                                muscle={muscle}
+                            <MuscleInformationForm
+                                submit={submit}
                                 data={data}
                                 setData={setData}
                                 errors={errors}
                                 processing={processing}
                                 recentlySuccessful={recentlySuccessful}
-                                onSubmit={submit}
+                                images={images}
                             />
                         </section>
                     </div>

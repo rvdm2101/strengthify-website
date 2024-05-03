@@ -22,7 +22,7 @@ export interface Muscle {
 
 export interface MuscleForm {
     name: string;
-    imageId?: number;
+    image_id?: number;
 }
 
 export interface ImageForm {

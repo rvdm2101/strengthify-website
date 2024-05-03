@@ -2,11 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Muscles\MuscleCreateRequest;
-use App\Http\Requests\Muscles\MuscleUpdateRequest;
+use App\Http\Requests\MuscleRequest;
+use App\Models\Images;
 use App\Models\Muscles;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -15,79 +13,56 @@ class MusclesController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): Response
     {
         return Inertia::render('Muscles/Index', [
-            'muscles' => Muscles::all(),
+            'muscles' => Muscles::with('image')->get(),
         ]);
     }
 
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(): Response
     {
-        return Inertia::render('Muscles/Create');
+        return Inertia::render('Muscles/Create', [
+            'images' => Images::all(),
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(MuscleCreateRequest $request)
+    public function store(MuscleRequest $request)
     {
         $muscle = new Muscles();
         $muscle->fill($request->validated());
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $request->image->storeAs('images', $filename);
-            $muscle->image = 'images/' . $filename;
-        }
-
         $muscle->save();
-        return redirect()->route('muscles.index');
-    }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
+        return redirect()->route('muscles.index');
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(string $id): Response
     {
-        $muscle = Muscles::find($id);
+        $muscle = Muscles::with('image')->find($id);
         return Inertia::render('Muscles/Edit', [
             'muscle' => $muscle,
+            'images' => Images::all(),
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(MuscleUpdateRequest $request, string $id)
+    public function update(MuscleRequest $request, string $id)
     {
         $muscle = Muscles::find($id);
         $muscle->fill($request->validated());
-        // var_dump($request->input());
-        // var_dump($id);
-        // die();
-
-        if ($request->hasFile('image')) {
-            $image = $request->file('image');
-            $filename = time() . '.' . $image->getClientOriginalExtension();
-            $request->image->storeAs('images', $filename);
-            Storage::delete($muscle->image);
-            $muscle->image = '/images/' . $filename;
-        }
-
         $muscle->save();
+
         return redirect()->route('muscles.index');
     }
 
