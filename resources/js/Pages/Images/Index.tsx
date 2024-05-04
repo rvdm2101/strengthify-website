@@ -28,7 +28,7 @@ export default function Index({ auth, images }: PageProps<{ images: Image[] }>) 
                                         {image.alt ? <span className="text-sm text-gray-600">{image.alt}</span> : null}
                                     </div>
                                     <div className="ml-auto">
-                                        <PrimaryButton onClick={() => router.delete(route('images.delete', { id: image.id }))}>Delete image</PrimaryButton>
+                                        <PrimaryButton onClick={() => router.delete(route('images.destroy', { id: image.id }))}>Delete image</PrimaryButton>
                                     </div>
                                 </div>
                             )) : (

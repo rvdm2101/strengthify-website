@@ -37,6 +37,6 @@ Route::middleware('auth')->group(function () {
 Route::get('/uploaded-images', [ImagesController::class, 'index'])->name('images.index');
 Route::get('/uploaded-images/new', [ImagesController::class, 'create'])->name('images.create');
 Route::post('/uploaded-images/new', [ImagesController::class, 'store'])->name('images.store');
-Route::delete('/uploaded-images/{id}', [ImagesController::class, 'destroy'])->name('images.delete');
+Route::delete('/uploaded-images/{id}', [ImagesController::class, 'destroy'])->name('images.destroy');
 
 require __DIR__ . '/auth.php';

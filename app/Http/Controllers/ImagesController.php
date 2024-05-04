@@ -56,6 +56,7 @@ class ImagesController extends Controller
     public function destroy(string $id)
     {
         if (!Images::where('id', $id)->exists()) {
+            return redirect()->route('images.index');
         }
 
         $image = Images::find($id);
