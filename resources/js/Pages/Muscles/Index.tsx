@@ -3,7 +3,6 @@ import { Head, Link } from '@inertiajs/react';
 import { Muscle, PageProps } from '@/types';
 
 export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }>) {
-    console.log({ muscles });
     return (
         <AuthenticatedLayout
             user={auth.user}
