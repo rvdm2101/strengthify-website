@@ -1,5 +1,5 @@
 import { FormEventHandler } from 'react';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm, router } from '@inertiajs/react';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { Image, Muscle, MuscleForm, PageProps } from '@/types';
 import MuscleInformationForm from './Partials/MuscleInformationForm';
@@ -9,6 +9,10 @@ export default function Edit({ auth, muscle, images }: PageProps<{ muscle: Muscl
         name: muscle.name,
         image_id: muscle.image?.id,
     });
+
+    const deleteMuscle = () => {
+        router.delete(route('muscles.destroy', { id: muscle.id }));
+    }
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -34,6 +38,7 @@ export default function Edit({ auth, muscle, images }: PageProps<{ muscle: Muscl
                                 processing={processing}
                                 recentlySuccessful={recentlySuccessful}
                                 images={images}
+                                onDelete={deleteMuscle}
                             />
                         </section>
                     </div>

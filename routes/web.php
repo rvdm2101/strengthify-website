@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/muscles/new', [MusclesController::class, 'store'])->name('muscles.store');
     Route::get('/muscles/{id}', [MusclesController::class, 'edit'])->name('muscles.edit');
     Route::patch('/muscles/{id}', [MusclesController::class, 'update'])->name('muscles.update');
+    Route::delete('/muscles/{id}', [MusclesController::class, 'destroy'])->name('muscles.destroy');
 });
 
 Route::get('/uploaded-images', [ImagesController::class, 'index'])->name('images.index');

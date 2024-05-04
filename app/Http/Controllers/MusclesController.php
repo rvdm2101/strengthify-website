@@ -71,6 +71,12 @@ class MusclesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        if (!Muscles::where('id', $id)->exists()) {
+            return redirect()->route('muscles.index');
+        }
+
+        $muscle = Muscles::find($id);
+        $muscle->delete();
+        return redirect()->route('muscles.index');
     }
 }

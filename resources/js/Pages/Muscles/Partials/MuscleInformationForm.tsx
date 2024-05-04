@@ -3,6 +3,7 @@ import InputLabel from '@/Components/InputLabel';
 import TextInput from '@/Components/TextInput';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
+import SecondaryButton from '@/Components/SecondaryButton';
 import ImageSelectModal from '@/Components/Modal/ImageSelectModal';
 import { Transition } from '@headlessui/react';
 import { Image, MuscleForm } from '@/types';
@@ -15,9 +16,10 @@ interface MuscleInformationFormProps {
     processing: boolean;
     recentlySuccessful: boolean;
     images: Image[];
+    onDelete?: () => void;
 }
 
-const MuscleInformationForm = ({ submit, data, setData, errors, processing, recentlySuccessful, images }: MuscleInformationFormProps) => {
+const MuscleInformationForm = ({ submit, data, setData, errors, processing, recentlySuccessful, images, onDelete }: MuscleInformationFormProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
     const selectImage = (newImageId: number) => {
@@ -83,6 +85,10 @@ const MuscleInformationForm = ({ submit, data, setData, errors, processing, rece
                 >
                     <p className="text-sm text-gray-600">Saved.</p>
                 </Transition>
+
+                {onDelete ? (
+                    <SecondaryButton disabled={processing} onClick={onDelete}>Delete</SecondaryButton>
+                ) : null}
             </div>
         </form>
     );
