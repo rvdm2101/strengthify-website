@@ -18,11 +18,11 @@ export default function Index({ auth, muscles }: PageProps<{ muscles: Muscle[] }
                             <h2 className="text-lg font-medium text-gray-900">Muscles overview and stuff</h2>
                             <Link className="ml-auto" href={route('muscles.create')}>Create new Muscle</Link>
                         </section>
-                        <section className="p-6 flex flex-row gap-4">
+                        <section className="p-6 grid grid-cols-5 gap-4">
                             {muscles.map(muscle => (
                                 <Link
                                     key={muscle.id}
-                                    className="relative basis-1/4 shadow-lg rounded-2xl border border-gray-500 overflow-hidden"
+                                    className="relative shadow-lg rounded-2xl border border-gray-500 overflow-hidden"
                                     href={route('muscles.edit', { id: muscle.id })}
                                 >
                                     <img className="h-64 p-6 mx-auto" src={muscle.image?.path} />
