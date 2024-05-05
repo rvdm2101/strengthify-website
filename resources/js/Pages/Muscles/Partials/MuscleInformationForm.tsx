@@ -1,7 +1,7 @@
 import { FormEventHandler, useState, useMemo } from 'react';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/Input/InputLabel';
+import TextInput from '@/Components/Input/TextInput';
+import InputError from '@/Components/Input/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import SecondaryButton from '@/Components/SecondaryButton';
 import ImageSelectModal from '@/Components/Modal/ImageSelectModal';

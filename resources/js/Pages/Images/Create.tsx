@@ -1,8 +1,8 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import InputLabel from '@/Components/InputLabel';
-import TextInput from '@/Components/TextInput';
-import FileInput from '@/Components/FileInput';
-import InputError from '@/Components/InputError';
+import InputLabel from '@/Components/Input/InputLabel';
+import TextInput from '@/Components/Input/TextInput';
+import FileInput from '@/Components/Input/FileInput';
+import InputError from '@/Components/Input/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
