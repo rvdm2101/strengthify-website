@@ -20,9 +20,24 @@ export interface Muscle {
     image?: Image;
 }
 
+export interface Exercise {
+    id: number;
+    name: string;
+    primaryMuscle: Muscle;
+    secondaryMuscles: Muscle[];
+    images: Image[];
+}
+
 export interface MuscleForm {
     name: string;
     image_id?: number;
+}
+
+export interface ExerciseForm {
+    name: string;
+    primary_muscle_id?: number;
+    secondary_muscle_ids: number[];
+    image_ids: number[];
 }
 
 export interface ImageForm {
