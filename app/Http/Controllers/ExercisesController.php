@@ -61,15 +61,27 @@ class ExercisesController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $exercise = Exercises::with(['primaryMuscle', 'secondaryMuscles', 'images'])->find($id);
+        return Inertia::render('Exercises/Edit', [
+            'exercise' => $exercise,
+            'images' => Images::all(),
+            'muscles' => Muscles::with('image')->get(),
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(ExerciseFormRequest $request, string $id)
     {
-        //
+        $exercise = Exercises::find($id);
+        $exercise->fill($request->validated());
+        $exercise->save();
+
+        $exercise->secondaryMuscles()->attach($request->input('secondary_muscle_ids'));
+        $exercise->images()->attach($request->input('image_ids'));
+
+        return redirect()->route('exercises.index');
     }
 
     /**
@@ -77,6 +89,7 @@ class ExercisesController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $exercise = Exercises::find($id);
+        $exercise->delete();
     }
 }
