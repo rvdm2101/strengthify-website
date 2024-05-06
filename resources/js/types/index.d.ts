@@ -23,8 +23,8 @@ export interface Muscle {
 export interface Exercise {
     id: number;
     name: string;
-    primaryMuscle: Muscle;
-    secondaryMuscles: Muscle[];
+    primary_muscle: Muscle;
+    secondary_muscles: Muscle[];
     images: Image[];
 }
 
@@ -51,3 +51,8 @@ export type PageProps<T extends Record<string, unknown> = Record<string, unknown
     };
     ziggy: Config & { location: string };
 };
+
+type setDataByObject<T> = (data: T) => void;
+type setDataByMethod<T> = (data: (previousData: T) => T) => void;
+type setDataByKeyValuePair<T> = <K extends keyof T>(key: K, value: T[K]) => void;
+export type UseFormSetData<T> = setDataByObject<T> & setDataByMethod<T> & setDataByKeyValuePair<T>;

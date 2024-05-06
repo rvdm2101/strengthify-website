@@ -21,11 +21,11 @@ class Exercises extends Model
 
     public function secondaryMuscles()
     {
-        return $this->belongsToMany(Muscles::class, 'muscle_exercise');
+        return $this->belongsToMany(Muscles::class, 'muscle_exercise', 'exercise_id', 'muscle_id');
     }
 
     public function images()
     {
-        return $this->belongsToMany(Images::class, 'exercise_images');
+        return $this->belongsToMany(Images::class, 'exercise_images', 'exercise_id', 'image_id');
     }
 }

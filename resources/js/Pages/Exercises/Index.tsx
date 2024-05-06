@@ -21,14 +21,15 @@ export default function Index({ auth, exercises }: PageProps<{ exercises: Exerci
                             {exercises.length ? exercises.map(exercise => (
                                 <Link
                                     key={exercise.id}
-                                    className="relative shadow-lg rounded-2xl border border-gray-500 overflow-hidden"
+                                    className="relative shadow-lg rounded-2xl border border-gray-500 overflow-hidden h-40"
                                     href={route('exercises.edit', { id: exercise.id })}
                                 >
                                     {exercise.images.length ? (
-                                        <img className="h-64 p-6 mx-auto" src={exercise.images[0].path} />
+                                        <img className="h-full p-6 mx-auto" src={exercise.images[0].path} />
                                     ) : null}
-                                    <div className="absolute w-full p-6 bottom-0">
-                                        <h3>{exercise.name}</h3>
+                                    <div className="absolute w-full p-4 bottom-0">
+                                        <h4 className='text-lg font-medium'>{exercise.name}</h4>
+                                        <h6 className='text-md text-gray-600'>{exercise.primary_muscle.name}</h6>
                                     </div>
                                     <div className="absolute w-full h-full bottom-0 bg-gradient-to-t from-gray-900 opacity-40" />
                                 </Link>
