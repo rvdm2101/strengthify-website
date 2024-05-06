@@ -6,7 +6,7 @@ import InputError from '@/Components/Input/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import { Transition } from '@headlessui/react';
 import { Head, useForm } from '@inertiajs/react';
-import { FormEventHandler } from 'react';
+import { FormEventHandler, useCallback } from 'react';
 import { ImageForm, PageProps } from '@/types';
 
 export default function Create({ auth }: PageProps) {
@@ -14,6 +14,20 @@ export default function Create({ auth }: PageProps) {
         image: undefined,
         alt: '',
     });
+
+    const onFileSelectChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.files?.length) {
+            const newFile = e.target.files[0];
+            setData(previousData => ({ image: newFile, alt: previousData.alt || newFile.name }));
+            return;
+        }
+        setData('image', undefined);
+    }, [setData]);
+
+    const onAltTextChange = useCallback(
+        (e: React.ChangeEvent<HTMLInputElement>) => setData('alt', e.target.value),
+        [setData]
+    );
 
     const submit: FormEventHandler = (e) => {
         e.preventDefault();
@@ -41,7 +55,7 @@ export default function Create({ auth }: PageProps) {
                                             name="image"
                                             image={data?.image || undefined}
                                             className="mt-1 block w-full"
-                                            onChange={(e) => setData('image', e.target.files?.length ? e.target.files[0] : undefined)}
+                                            onChange={onFileSelectChange}
                                             required
                                         />
                                     </InputLabel>
@@ -56,7 +70,7 @@ export default function Create({ auth }: PageProps) {
                                         name="alt"
                                         className="mt-1 block w-full"
                                         value={data.alt}
-                                        onChange={(e) => setData('alt', e.target.value)}
+                                        onChange={onAltTextChange}
                                         required
                                         isFocused
                                     />
