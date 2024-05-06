@@ -9,6 +9,7 @@ import { Transition } from '@headlessui/react';
 import { ExerciseForm, Image, Muscle, UseFormSetData } from "@/types";
 import SelectInput from "@/Components/Input/SelectInput";
 import SelectableTag from "@/Components/SelectableTag";
+import { TrashIcon } from "@heroicons/react/24/solid";
 
 interface ExerciseInformationFormProps {
     submit: FormEventHandler;
@@ -25,17 +26,27 @@ interface ExerciseInformationFormProps {
 const ExerciseInformationForm = ({ submit, data, setData, errors, processing, recentlySuccessful, images, muscles, onDelete }: ExerciseInformationFormProps) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
 
-    // const selectImage = (newImageId: number) => {
-    //     setData('image_id', newImageId);
-    //     setIsModalOpen(false);
-    // }
+    const selectImage = useCallback((newImageId: number) => {
+        setData(previousData => ({
+            ...previousData,
+            image_ids: previousData.image_ids.includes(newImageId) ? previousData.image_ids : [...previousData.image_ids, newImageId]
+        }));
+        // setIsModalOpen(false);
+    }, [setData]);
 
-    // const selectedImage = useMemo<Image | undefined>(() => {
-    //     if (!data.image_id || !images.length) {
-    //         return undefined;
-    //     }
-    //     return images.find(image => image.id === data.image_id);
-    // }, [data]);
+    const removeImage = useCallback((imageId: number) => {
+        setData(previousData => ({
+            ...previousData,
+            image_ids: previousData.image_ids.filter(id => id !== imageId)
+        }));
+    }, [setData]);
+
+    const selectedImages = useMemo<Image[]>(() => {
+        if (!data.image_ids || !images.length) {
+            return [];
+        }
+        return images.filter(image => data.image_ids.includes(image.id));
+    }, [data]);
 
 
     const primaryMuscleClick = useCallback((value: string) => {
@@ -58,7 +69,7 @@ const ExerciseInformationForm = ({ submit, data, setData, errors, processing, re
 
     return (
         <form onSubmit={submit} encType="application/json">
-            <ImageSelectModal show={isModalOpen} onClose={() => setIsModalOpen(false)} images={images} selectImage={(imageId) => {}} />
+            <ImageSelectModal show={isModalOpen} onClose={() => setIsModalOpen(false)} images={images} selectedImageIds={data.image_ids} selectImage={selectImage} />
 
             <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <section className="p-6">
@@ -83,20 +94,18 @@ const ExerciseInformationForm = ({ submit, data, setData, errors, processing, re
             
                         <div>
                             <InputLabel value="Images" />
-            
-                            {/* {selectedImage ? (
-                                <div className="mt-1">
-                                    <img className="h-64 p-2" src={selectedImage.path} />
-                                    <div className="p-2">
-                                        <h3>{selectedImage.filename}</h3>
-                                        {selectedImage.alt ? (<span className="text-gray-800 text-xs">Alt: {selectedImage.alt}</span>) : null}
+
+                            <div className="mt-1 grid grid-cols-3 gap-4">
+                                {selectedImages.map((selectedImage, index) => (
+                                    <div key={index} className="relative bg-white p-2 border group">
+                                        <img className="h-36 mx-auto" src={selectedImage.path} />
+                                        <button className="absolute top-2 right-2 invisible group-hover:visible" onClick={() => removeImage(selectedImage.id)}>
+                                            <TrashIcon className="w-6 h-6 text-red-600 hover:text-red-700" />
+                                        </button>
                                     </div>
-                                    <PrimaryButton type="button" onClick={() => setIsModalOpen(true)}>Change image</PrimaryButton>
-                                </div>
-                            ):(
-                                <PrimaryButton className="mt-1" type="button" onClick={() => setIsModalOpen(true)}>Select image</PrimaryButton>
-                            )} */}
-                            <PrimaryButton className="mt-1" type="button" onClick={() => setIsModalOpen(true)}>Select image</PrimaryButton>
+                                ))}
+                            </div>
+                            <PrimaryButton className="mt-4" type="button" onClick={() => setIsModalOpen(true)}>Change image</PrimaryButton>
                             <InputError className="mt-2" message={errors.image_ids} />
                         </div>
                     </div>

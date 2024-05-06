@@ -43,6 +43,7 @@ class ExercisesController extends Controller
         $exercise->save();
 
         $exercise->secondaryMuscles()->attach($request->input('secondary_muscle_ids'));
+        $exercise->images()->attach($request->input('image_ids'));
 
         return redirect()->route('exercises.index');
     }
